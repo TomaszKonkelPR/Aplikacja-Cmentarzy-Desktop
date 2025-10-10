@@ -1,0 +1,34 @@
+{
+  "cemeteries": {
+    "LO": {
+      "url": "jdbc:postgresql://localhost:5432/cmentarzXXX",
+      "user": "login",
+      "password": "haslo",
+      "excelFile": "Nazwa_pliku_z_danymi.xlsx"
+    },
+    "FR": {
+      "url": "jdbc:postgresql://localhost:5432/cmentarzXXY",
+      "user": "login",
+      "password": "haslo",
+      "excelFile": "Nazwa_pliku_z_danymi.xlsx"
+    },
+    "GA": {
+      "url": "jdbc:postgresql://localhost:5432/cmentarzXXZ",
+      "user": "login",
+      "password": "haslo",
+      "excelFile": "Nazwa_pliku_z_danymi.xlsx"
+    },
+    "IG": {
+      "url": "jdbc:postgresql://localhost:5432/cmentarzXZZ",
+      "user": "login",
+      "password": "haslo",
+      "excelFile": "Nazwa_pliku_z_danymi.xlsx"
+    },
+    "SA": {
+      "url": "jdbc:postgresql://localhost:5432/cmentarzXYY",
+      "user": "login",
+      "password": "haslo",
+      "excelFile": "Nazwa_pliku_z_danymi.xlsx"
+    }
+  }
+}

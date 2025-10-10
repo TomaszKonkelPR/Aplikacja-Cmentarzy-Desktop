@@ -1,0 +1,208 @@
+.table-view {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+/* Nagłówki */
+.table-view .column-header {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #dcdcdc;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* Efekt najechania */
+.table-row-cell:hover {
+    -fx-background-color: #e8f0fe;
+    /* lekki niebieski */
+}
+
+/* Wiersze bez grobu */
+.table-row-cell.missing-grave-row {
+    -fx-background-color: #ffe0e0;
+    /* delikatny czerwony */
+}
+
+.table-row-cell.missing-grave-row:hover {
+    -fx-background-color: #f5bbbb;
+    /* jaśniejszy czerwony przy hoverze */
+}
+
+/* Podświetlenie wybranego wiersza */
+.table-row-cell:selected {
+    -fx-background-color: #cce5ff;
+    -fx-text-fill: #000;
+}
+
+.table-row-cell.missing-grave-row:selected {
+    -fx-background-color: #920606;
+    /* jaśniejszy czerwony przy hoverze */
+    -fx-text-fill: #000;
+}
+
+.changes-panel {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+.change-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+    -fx-padding: 10;
+    -fx-spacing: 5;
+}
+
+.change-card-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2a2a2a;
+}
+
+.change-item {
+    -fx-padding: 0 0 0 15;
+    -fx-font-size: 12px;
+    -fx-text-fill: #555;
+}
+
+#load-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 5;
+}
+
+#load-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+#closeGrave-button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 5;
+}
+
+#closeGrave-button:hover {
+    -fx-background-color: #c82333;
+}
+
+#save-button {
+    -fx-background-color: #47ee55;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 5;
+}
+
+#save-button:hover {
+    -fx-background-color: #106610;
+}
+
+#view-button {
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 5;
+}
+
+#back-button {
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 5;
+}
+
+.bottom-bar {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #b0b0b0;
+    -fx-border-width: 1 0 0 0;
+}
+
+.tab-button {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #000000;
+    -fx-border-width: 0 0 0 0;
+    -fx-background-radius: 0 0 10 10;
+    -fx-border-radius: 0 0 10 10;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+.tab-button:hover {
+    -fx-background-color: white;
+    -fx-border-color: #000000;
+}
+
+.tab-button.active {
+    -fx-background-color: #0078d7;
+    -fx-border-color: #0078d7;
+    -fx-text-fill: white;
+    -fx-border-width: 1;
+    -fx-background-radius: 0 0 10 10;
+    -fx-border-radius: 0 0 10 10;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane>.viewport {
+    -fx-background-color: transparent;
+}
+
+.edit-location-button {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+    -fx-padding: 3 8;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.edit-location-button:hover {
+    -fx-background-color: #1565c0;
+}
+
+.extend-pay-button {
+    -fx-background-color: #106610;
+    /* niebieski */
+    -fx-text-fill: white;
+    -fx-padding: 3 8;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.extend-pay-button:hover {
+    -fx-background-color: #47ee55;
+}
+
+.sidebar {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.sidebar-button {
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-max-width: Infinity;
+}
+
+/* === Center content === */
+.center-box {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 40;
+}
+
+.info-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 20 0 0 0;
+}

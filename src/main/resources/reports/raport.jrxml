@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+    name="ksiega_grobow"
+    pageWidth="842"
+    pageHeight="595"
+    orientation="Landscape"
+    columnWidth="761"
+    leftMargin="71"
+    rightMargin="10"
+    topMargin="10"
+    bottomMargin="10">
+
+    <import value="com.mycompany.sample.backend.service.raports.DateInWords" />
+    <!-- Styl czcionki -->
+    <style name="PolskaCzcionka"
+        pdfFontName="fonts/Roboto-VariableFont_wdth,wght.ttf"
+        pdfEncoding="Identity-H"
+        isPdfEmbedded="true" />
+
+    <style name="BoldText"
+        pdfFontName="fonts/Roboto-Bold.ttf"
+        pdfEncoding="Identity-H"
+        isPdfEmbedded="true"
+        isBold="true" />
+
+    <style name="Roboto" fontName="Roboto" />
+
+    <!-- Styl komórek -->
+    <style name="CellBorderStyle" mode="Opaque" backcolor="#FFFFFF"
+        border="Thin" pdfFontName="fonts/Roboto-VariableFont_wdth,wght.ttf"
+        pdfEncoding="Identity-H" isPdfEmbedded="true" />
+
+    <style name="CellDateBorderStyle" mode="Opaque" backcolor="#FFFFFF"
+        leftBorder="Thin" rightBorder="Thin" topBorder="Thin"
+        pdfFontName="fonts/Roboto-VariableFont_wdth,wght.ttf"
+        pdfEncoding="Identity-H" isPdfEmbedded="true" />
+
+    <style name="CellDateWordBorderStyle" mode="Opaque" backcolor="#FFFFFF"
+        leftBorder="Thin" rightBorder="Thin" bottomBorder="Thin"
+        pdfFontName="fonts/Roboto-VariableFont_wdth,wght.ttf"
+        pdfEncoding="Identity-H" isPdfEmbedded="true" />
+
+    <style name="CellBorderStyleLeftRight"
+        mode="Opaque"
+        backcolor="#FFFFFF"
+        leftBorder="Thin"
+        rightBorder="Thin"
+        topBorder="None"
+        bottomBorder="None"
+        pdfFontName="fonts/Roboto-VariableFont_wdth,wght.ttf"
+        pdfEncoding="Identity-H"
+        isPdfEmbedded="true" />
+
+    <style name="CellBorderStyleNoBottom"
+        mode="Opaque"
+        backcolor="#FFFFFF"
+        leftBorder="Thin"
+        rightBorder="Thin"
+        topBorder="Thin"
+        bottomBorder="None"
+        pdfFontName="fonts/Roboto-VariableFont_wdth,wght.ttf"
+        pdfEncoding="Identity-H"
+        isPdfEmbedded="true" />
+
+    <!-- SubDataset dla zmarłych -->
+    <subDataset name="DeceasedDataset">
+        <parameter name="RejestrZabytkow" class="java.time.LocalDate" />
+        <field name="numerEwidencyjny" class="java.lang.String" />
+        <field name="rodzajGrobu" class="java.lang.String" />
+        <field name="pochowanyW" class="java.lang.String" />
+        <field name="imie" class="java.lang.String" />
+        <field name="nazwisko" class="java.lang.String" />
+        <field name="dataPochowania" class="java.time.LocalDate" />
+        <field name="grobOplaconyDo" class="java.time.LocalDate" />
+        <field name="adnotacja" class="java.lang.String" />
+    </subDataset>
+
+    <parameter name="TytulRaportu" class="java.lang.String" />
+    <!-- Pola grobu -->
+
+    <field name="rejon" class="java.lang.String" />
+    <field name="kwatera" class="java.lang.String" />
+    <field name="rzad" class="java.lang.String" />
+    <field name="numerMiejsca" class="java.lang.String" />
+    <field name="rodzajGrobu" class="java.lang.String" />
+    <field name="rejestrZabytkow" class="java.time.LocalDate" />
+    <field name="pochowani" class="java.util.List" />
+
+    <pageHeader>
+        <band height="20">
+            <!-- Tytuł po lewej -->
+            <textField>
+                <reportElement x="0" y="0" width="411" height="20" style="PolskaCzcionka" />
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="12" />
+                </textElement>
+                <textFieldExpression><![CDATA[$P{TytulRaportu}]]></textFieldExpression>
+            </textField>
+
+            <!-- Numer strony i rok po prawej -->
+            <staticText>
+                <reportElement x="482" y="0" width="269" height="20" style="PolskaCzcionka" />
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10" isBold="true" />
+                </textElement>
+                <text><![CDATA[Strona.........Rok.........]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <!-- DETAIL: każdy grób -->
+    <detail>
+
+        <!-- BLOK GROBU: opis + tabela -->
+        <band height="540">
+
+            <!-- Opis grobu -->
+            <textField>
+                <reportElement x="0" y="10" width="761" height="20" style="Roboto" />
+                <textElement markup="styled">
+                    <font size="12" />
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Rejon <b>" + ($F{rejon} == null ? "" : $F{rejon}) + "</b>" +
+                    "   Kwatera <b>" + ($F{kwatera} == null ? "" : $F{kwatera}) + "</b>" +
+                    "   Rząd <b>" + ($F{rzad} == null ? "" : $F{rzad}) + "</b>" +
+                    "   Nr grobu <b>" + ($F{numerMiejsca} == null ? "" : $F{numerMiejsca}) + "</b>"
+                ]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="30" width="761" height="20" style="Roboto" />
+                <textElement markup="styled">
+                    <font size="10" />
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Rodzaj grobu: <b>" + $F{rodzajGrobu} + "</b>"
+                ]]></textFieldExpression>
+
+            </textField>
+            <!-- Tabela pochowanych -->
+            <componentElement>
+                <reportElement x="0" y="50" width="761" height="490" />
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <datasetRun subDataset="DeceasedDataset">
+                        <datasetParameter name="RejestrZabytkow">
+                            <datasetParameterExpression><![CDATA[$F{rejestrZabytkow}]]></datasetParameterExpression>
+                        </datasetParameter>
+                        <dataSourceExpression><![CDATA[
+                            new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pochowani})
+                        ]]></dataSourceExpression>
+                    </datasetRun>
+
+                    <!-- Kolumna Nr Ewid. -->
+                    <jr:column width="65">
+                        <jr:columnHeader height="45">
+                            <staticText>
+                                <reportElement x="0" y="0" width="65" height="45"
+                                    style="CellBorderStyle" backcolor="#D3D3D3" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font isBold="true" />
+                                </textElement>
+                                <text><![CDATA[Nr Ewid.]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell height="45">
+                            <textField>
+                                <reportElement x="0" y="0" width="65" height="45"
+                                    style="CellBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="6" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{numerEwidencyjny}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- Kolumna Imię i Nazwisko -->
+                    <jr:column width="170">
+                        <jr:columnHeader height="45">
+                            <staticText>
+                                <reportElement x="0" y="0" width="170" height="45"
+                                    style="CellBorderStyle" backcolor="#D3D3D3" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font isBold="true" />
+                                </textElement>
+                                <text><![CDATA[Nazwisko i imiona zmarłego]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell height="45">
+                            <textField>
+                                <reportElement x="0" y="0" width="170" height="45"
+                                    style="CellBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="8" />
+                                </textElement>
+
+                                <textFieldExpression><![CDATA[
+                                $F{imie}.equalsIgnoreCase("LIKWIDACJA")
+                                    ? $F{imie} + " " + $F{nazwisko}
+                                    : $F{nazwisko} + " " + $F{imie}
+                                ]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- Kolumna Data pochowania -->
+                    <jr:column width="145">
+                        <jr:columnHeader height="45">
+                            <staticText>
+                                <reportElement x="0" y="0" width="145" height="45"
+                                    style="CellBorderStyle" backcolor="#D3D3D3" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font isBold="true" />
+                                </textElement>
+                                <text><![CDATA[Data pochówku]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell height="45">
+                            <textField pattern="yyyy-MM-dd">
+                                <reportElement x="0" y="0" width="145" height="30"
+                                    style="CellDateBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="8"></font>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{dataPochowania} == null ? "" : $F{dataPochowania}]]></textFieldExpression>
+                            </textField>
+                            <textField pattern="yyyy-MM-dd">
+                                <reportElement x="0" y="30" width="145" height="15"
+                                    style="CellDateWordBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="4" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[
+                                    $F{dataPochowania} == null 
+                                        ? "" 
+                                        : "(" + DateInWords.toYMDWords($F{dataPochowania}) + ")"
+                                ]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- Kolumna Dodatkowa 1 -->
+                    <jr:column width="85">
+                        <jr:columnHeader height="45">
+                            <staticText>
+                                <reportElement x="0" y="0" width="85" height="45"
+                                    style="CellBorderStyle" backcolor="#D3D3D3" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font isBold="true" />
+                                </textElement>
+                                <text><![CDATA[Rodzaj pochówku]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell height="45">
+                            <textField>
+                                <reportElement x="0" y="0" width="85" height="45"
+                                    style="CellBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="8" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{pochowanyW}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- Kolumna Dodatkowa 1 -->
+                    <jr:column width="145">
+                        <jr:columnHeader height="45">
+                            <staticText>
+                                <reportElement x="0" y="0" width="145" height="45"
+                                    style="CellBorderStyle" backcolor="#D3D3D3" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font isBold="true" />
+                                </textElement>
+                                <text><![CDATA[Opłacony do]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell height="45">
+                            <textField>
+                                <reportElement x="0" y="0" width="145" height="30"
+                                    style="CellDateBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="8" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[
+                                    "LIKWIDACJA".equalsIgnoreCase($F{imie}) 
+                                        ? "" 
+                                        : ($F{grobOplaconyDo} == null ? "" : $F{grobOplaconyDo})
+                                    ]]></textFieldExpression>
+                            </textField>
+                            <textField>
+                                <reportElement x="0" y="30" width="145" height="15"
+                                    style="CellDateWordBorderStyle" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font size="4" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[
+                                    "LIKWIDACJA".equalsIgnoreCase($F{imie}) 
+                                        ? "" 
+                                        : ($F{grobOplaconyDo} == null ? "" : "(" + DateInWords.toYMDWords($F{grobOplaconyDo}) + ")")
+                                    ]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <jr:column width="145">
+                        <jr:columnHeader height="45">
+                            <staticText>
+                                <reportElement x="0" y="0" width="145" height="45"
+                                    style="CellBorderStyle" backcolor="#D3D3D3" />
+                                <textElement textAlignment="Center" verticalAlignment="Middle">
+                                    <font isBold="true" size="8" />
+                                </textElement>
+                                <text><![CDATA[Uwagi, zastrzegający : imię i nazwisko, adres, dowód osobisty, seria numer  Wpis do rejestru zabytków]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell height="45">
+                            <!-- Komórka z dolnym borderem (dla nieostatnich wierszy) -->
+                            <!-- ADNOTACJA na górze -->
+                            <textField isStretchWithOverflow="true">
+                                <reportElement x="0" y="0" width="145" height="25"
+                                    style="CellBorderStyleNoBottom">
+                                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
+                                </reportElement>
+                                <textElement textAlignment="Left" verticalAlignment="Top">
+                                    <font size="6" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{adnotacja}]]></textFieldExpression>
+                            </textField>
+
+                            <!-- REJESTR ZABYTKÓW na dole -->
+                            <textField isStretchWithOverflow="false">
+                                <reportElement x="0" y="25" width="145" height="20"
+                                    style="CellBorderStyleLeftRight">
+                                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
+                                </reportElement>
+                                <textElement textAlignment="Left" verticalAlignment="Bottom">
+                                    <font size="6" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[
+                                    $P{RejestrZabytkow} == null 
+                                        ? "" 
+                                        : $P{RejestrZabytkow} + "(" + DateInWords.toYMDWords($P{RejestrZabytkow}) + ")"
+                                ]]></textFieldExpression>
+                            </textField>
+
+                            <staticText>
+                                <reportElement x="0" y="0" width="145" height="45"
+                                    style="CellBorderStyleLeftRight">
+                                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} != 1]]></printWhenExpression>
+                                </reportElement>
+                                <textElement textAlignment="Left" verticalAlignment="Top">
+                                    <font size="6" />
+                                </textElement>
+                                <text></text>
+                            </staticText>
+
+                            <!-- Komórka bez dolnego borderu (dla ostatniego wiersza) -->
+                            <textField>
+                                <reportElement x="0" y="0" width="145" height="45"
+                                    style="CellDateWordBorderStyle"> <!-- styl bez borderu -->
+                                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} == 10]]></printWhenExpression>
+                                </reportElement>
+                                <textElement textAlignment="Left" verticalAlignment="Top">
+                                    <font size="6" />
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{adnotacja}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                </jr:table>
+            </componentElement>
+        </band>
+    </detail>
+</jasperReport>
